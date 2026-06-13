@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>BOLTS — Build. Optimize. Log. Test. Secure.</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                --black: #0a0a0a;
+                --surface: #111113;
+                --surface2: #161618;
+                --border: #1f1f24;
+                --border-hi: #2a2a32;
+                --dim: #7a7a85;
+                --white: #f5f5f7;
+                --accent: #00e5ff;
+                --font-d: "Space Grotesk", sans-serif;
+                --font-m: "Space Mono", monospace;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background: var(--black);
+                color: var(--white);
+                font-family: var(--font-d);
+                line-height: 1.65;
+                overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            /* CONSTRAIN LARGE SCREENS */
+            .container {
+                width: 100%;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            /* NAV */
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1.3rem 0;
+                background: rgba(10, 10, 10, 0.88);
+                backdrop-filter: blur(14px);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-inner {
+                width: 100%;
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 7vw;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            nav img {
+                height: 32px;
+            }
+
+            nav ul {
+                display: flex;
+                gap: 3.2rem;
+                list-style: none;
+            }
+
+            nav a {
+                color: var(--dim);
+                text-decoration: none;
+                font-family: var(--font-m);
+                font-size: 0.72rem;
+                font-weight: 400;
+                letter-spacing: 0.08em;
+                transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                text-transform: uppercase;
+            }
+
+            nav a:hover {
+                color: var(--accent);
+            }
+
+            .nav-cta {
+                background: var(--white);
+                color: var(--black);
+                border: 1px solid var(--white);
+                padding: 0.6rem 1.6rem;
+                font-family: var(--font-m);
+                font-size: 0.7rem;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                text-transform: uppercase;
+            }
+
+            .nav-cta:hover {
+                opacity: 0.88;
+                transform: translateY(-1px);
+            }
+
+            @media (max-width: 720px) {
+                nav ul {
+                    display: none;
+                }
+                .nav-inner {
+                    padding: 0 5vw;
+                }
+            }
+
+            /* HERO */
+            #hero {
+                min-height: 100vh;
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                align-items: center;
+                gap: 5vw;
+                padding: 9rem 7vw 5rem;
+                position: relative;
+            }
+
+            #hero .container {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 5vw;
+                align-items: center;
+            }
+
+            @media (max-width: 900px) {
+                #hero {
+                    padding: 8rem 5vw 4rem;
+                }
+                #hero .container {
+                    grid-template-columns: 1fr;
+                    gap: 4rem;
+                }
+            }
+
+            .hero-eyebrow {
+                font-family: var(--font-m);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                color: var(--accent);
+                text-transform: uppercase;
+                margin-bottom: 1.5rem;
+                font-weight: 400;
+            }
+
+            .hero-eyebrow::before {
+                content: "// ";
+                color: var(--dim);
+            }
+
+            .hero-h1 {
+                font-size: clamp(2.3rem, 4.8vw, 3.8rem);
+                font-weight: 500;
+                line-height: 1.12;
+                letter-spacing: -0.025em;
+                margin-bottom: 2rem;
+                color: var(--white);
+                max-width: 640px;
+            }
+
+            .hero-h1 em {
+                font-style: normal;
+                font-weight: 600;
+                color: var(--white);
+            }
+
+            .hero-p {
+                color: var(--dim);
+                font-size: 1rem;
+                line-height: 1.75;
+                margin-bottom: 2.8rem;
+                max-width: 540px;
+            }
+
+            .hero-actions {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .btn-main {
+                background: var(--white);
+                color: var(--black);
+                border: 1px solid var(--white);
+                padding: 0.85rem 2.2rem;
+                font-family: var(--font-m);
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                text-transform: uppercase;
+            }
+
+            .btn-main:hover {
+                background: transparent;
+                color: var(--white);
+            }
+
+            .btn-sec {
+                background: transparent;
+                color: var(--white);
+                border: 1px solid var(--border);
+                padding: 0.85rem 2.2rem;
+                font-family: var(--font-m);
+                font-size: 0.75rem;
+                font-weight: 400;
+                letter-spacing: 0.06em;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                text-transform: uppercase;
+            }
+
+            .btn-sec:hover {
+                border-color: var(--white);
+                color: var(--white);
+            }
+
+            .hero-logo-box {
+                background: transparent;
+                border: none;
+                width: 100%;
+                max-width: 100%;
+                aspect-ratio: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                margin-left: auto;
+            }
+
+            @media (max-width: 900px) {
+                .hero-logo-box {
+                    max-width: 100%;
+                    margin: 0 auto;
+                }
+            }
+
+            .hero-logo-box img {
+                width: clamp(280px, 45vw, 520px);
+                height: auto;
+                opacity: 0.95;
+            }
+
+            @media (max-width: 900px) {
+                .hero-logo-box img {
+                    width: clamp(240px, 60vw, 420px);
+                }
+            }
+
+            @media (max-width: 640px) {
+                .hero-logo-box img {
+                    width: clamp(180px, 70vw, 320px);
+                }
+            }
+
+            .hero-logo-box::before {
+                display: none;
+            }
+
+            /* SECTIONS */
+            .sec {
+                padding: 8rem 7vw;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .sec .container {
+                width: 100%;
+            }
+
+            .sec-label {
+                font-family: var(--font-m);
+                font-size: 0.68rem;
+                letter-spacing: 0.18em;
+                color: var(--accent);
+                text-transform: uppercase;
+                margin-bottom: 1.2rem;
+                font-weight: 400;
+            }
+
+            .sec-label::before {
+                content: "// ";
+                color: var(--dim);
+            }
+
+            .sec-h2 {
+                font-size: clamp(2rem, 3.8vw, 2.6rem);
+                font-weight: 500;
+                line-height: 1.2;
+                letter-spacing: -0.02em;
+                margin-bottom: 1.5rem;
+                max-width: 720px;
+            }
+
+            .sec-p {
+                color: var(--dim);
+                font-size: 0.98rem;
+                max-width: 540px;
+                line-height: 1.75;
+            }
+
+            /* SERVICES */
+            #services {
+                background: var(--surface);
+            }
+
+            .services-intro {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5vw;
+                margin-bottom: 5rem;
+                align-items: start;
+            }
+
+            @media (max-width: 900px) {
+                .services-intro {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
+            }
+
+            .grid-3 {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 1.6rem;
+            }
+
+            @media (min-width: 1401px) {
+                .grid-3 {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            .card {
+                background: var(--black);
+                border: 1px solid var(--border);
+                padding: 2.4rem;
+                position: relative;
+                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+
+            .card:hover {
+                border-color: var(--border-hi);
+                background: var(--surface2);
+                transform: translateY(-2px);
+            }
+
+            .card-marker {
+                font-family: var(--font-m);
+                font-size: 0.64rem;
+                color: var(--accent);
+                margin-bottom: 1.8rem;
+                display: block;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-weight: 400;
+            }
+
+            .card-title {
+                font-size: 1.12rem;
+                font-weight: 500;
+                margin-bottom: 0.8rem;
+                letter-spacing: -0.01em;
+                line-height: 1.3;
+            }
+
+            .card-desc {
+                font-size: 0.9rem;
+                color: var(--dim);
+                line-height: 1.68;
+            }
+
+            /* WHY */
+            .why-split {
+                display: grid;
+                grid-template-columns: 38% 1fr;
+                gap: 6vw;
+                align-items: start;
+                margin-top: 4rem;
+            }
+
+            @media (max-width: 900px) {
+                .why-split {
+                    grid-template-columns: 1fr;
+                    gap: 3rem;
+                }
+            }
+
+            .why-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem 2.8rem;
+            }
+
+            @media (max-width: 600px) {
+                .why-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .why-item {
+                border-top: 1px solid var(--border);
+                padding-top: 1.5rem;
+                transition: all 0.2s ease;
+            }
+
+            .why-item:hover {
+                border-top-color: var(--accent);
+            }
+
+            .why-num {
+                font-family: var(--font-m);
+                font-size: 0.64rem;
+                color: var(--accent);
+                margin-bottom: 0.6rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                font-weight: 400;
+            }
+
+            .why-title {
+                font-size: 1.1rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+                letter-spacing: -0.01em;
+            }
+
+            .why-desc {
+                font-size: 0.88rem;
+                color: var(--dim);
+                line-height: 1.7;
+            }
+
+            /* CONTACT */
+            #contact {
+                background: var(--surface);
+            }
+
+            .contact-wrapper {
+                display: grid;
+                grid-template-columns: 0.95fr 1.05fr;
+                gap: 6vw;
+                margin-top: 4rem;
+            }
+
+            @media (max-width: 900px) {
+                .contact-wrapper {
+                    grid-template-columns: 1fr;
+                    gap: 3rem;
+                }
+            }
+
+            .cf {
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+
+            .cf input,
+            .cf textarea {
+                background: var(--black);
+                border: 1px solid var(--border);
+                color: var(--white);
+                font-family: var(--font-d);
+                font-size: 0.92rem;
+                padding: 1rem 1.2rem;
+                outline: none;
+                transition: all 0.2s ease;
+                letter-spacing: 0.01em;
+                text-transform: uppercase;
+                font-size: 0.82rem;
+            }
+
+            .cf input::placeholder,
+            .cf textarea::placeholder {
+                color: var(--dim);
+                text-transform: uppercase;
+            }
+
+            .cf input:focus,
+            .cf textarea:focus {
+                border-color: var(--accent);
+                background: var(--surface2);
+            }
+
+            .cf textarea {
+                min-height: 160px;
+                resize: none;
+                font-family: var(--font-d);
+            }
+
+            #formSuccess,
+            #formError {
+                display: none;
+                border: 1px solid var(--border);
+                padding: 1.2rem;
+                font-family: var(--font-m);
+                font-size: 0.8rem;
+                letter-spacing: 0.02em;
+            }
+
+            #formSuccess {
+                background: rgba(0, 229, 255, 0.03);
+                border-color: rgba(0, 229, 255, 0.25);
+                color: var(--white);
+            }
+
+            /* FOOTER */
+            footer {
+                background: var(--black);
+                padding: 3rem 7vw;
+                border-top: 1px solid var(--border);
+            }
+
+            .footer-inner {
+                width: 100%;
+                max-width: 1400px;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+
+            footer p {
+                font-family: var(--font-m);
+                font-size: 0.68rem;
+                color: var(--dim);
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            @media (max-width: 640px) {
+                .sec {
+                    padding: 6rem 5vw;
+                }
+                .nav-inner {
+                    padding: 0 5vw;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-inner">
+                <img src="Bolts_logo.png" alt="BOLTS" />
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#why">Why BOLTS</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="nav-cta">Get in Touch</a>
+            </div>
+        </nav>
+
+        <section id="hero">
+            <div class="container">
+                <div class="hero-left">
+                    <p class="hero-eyebrow">Software Studio</p>
+                    <h1 class="hero-h1">
+                        We build software that
+                        <em>works flawlessly and stays secure</em>
+                    </h1>
+                    <p class="hero-p">
+                        From MVPs to penetration testing — BOLTS delivers
+                        precision engineering end to end. Single operator,
+                        pristine execution, zero context loss.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn-main">Start a Project</a>
+                        <a href="#services" class="btn-sec">See What We Do</a>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div class="hero-logo-box">
+                        <img src="Bolts_logo.png" alt="BOLTS" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="sec">
+            <div class="container">
+                <div class="services-intro">
+                    <div>
+                        <p class="sec-label">Execution Spectrum</p>
+                        <h2 class="sec-h2">
+                            Full-stack capability. Zero compromise.
+                        </h2>
+                    </div>
+                    <div>
+                        <p class="sec-p">
+                            Every engagement is handled with precision — whether
+                            you're launching a product or locking one down. Full
+                            lifecycle coverage, natively secure.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card">
+                        <span class="card-marker">[01_BUILD]</span>
+                        <h3 class="card-title">Web & App Development</h3>
+                        <p class="card-desc">
+                            Custom-built applications and MVPs. Clean code, fast
+                            delivery, built to scale and secure from line one.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="card-marker">[02_OPTIMIZE]</span>
+                        <h3 class="card-title">Performance Optimization</h3>
+                        <p class="card-desc">
+                            Audit and overhaul slow systems. We identify
+                            bottlenecks and eliminate them completely at the
+                            source.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="card-marker">[03_LOG]</span>
+                        <h3 class="card-title">Monitoring & Logging</h3>
+                        <p class="card-desc">
+                            Full observability pipelines. Know what's happening
+                            in your system before your users report problems.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="card-marker">[04_TEST]</span>
+                        <h3 class="card-title">QA & Testing</h3>
+                        <p class="card-desc">
+                            Rigorous testing cycles — unit, integration, e2e.
+                            Ship with absolute confidence and bulletproof
+                            validation.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="card-marker">[05_SECURE]</span>
+                        <h3 class="card-title">Penetration Testing</h3>
+                        <p class="card-desc">
+                            Web and mobile security assessments. Find
+                            vulnerabilities before the attackers do.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <span class="card-marker">[06_DEPLOY]</span>
+                        <h3 class="card-title">DevOps & Infrastructure</h3>
+                        <p class="card-desc">
+                            CI/CD pipelines, cloud infrastructure, deployment
+                            automation built for extreme uptime resilience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why" class="sec">
+            <div class="container">
+                <p class="sec-label">The Blueprint</p>
+                <h2 class="sec-h2">Architectural principles.</h2>
+
+                <div class="why-split">
+                    <div class="why-left">
+                        <p class="sec-p">
+                            We prioritize elite software craftsmanship. Every
+                            single asset we build is held to a flawless,
+                            granular specification — no shortcuts, no
+                            compromises.
+                        </p>
+                    </div>
+
+                    <div>
+                        <div class="why-grid">
+                            <div class="why-item">
+                                <p class="why-num">01_SECURITY_NATIVE</p>
+                                <h3 class="why-title">Security-Infused Code</h3>
+                                <p class="why-desc">
+                                    Security isn't a final audit scan. Threat
+                                    validation logic is woven directly into
+                                    every layer we engineer.
+                                </p>
+                            </div>
+                            <div class="why-item">
+                                <p class="why-num">02_ZERO_CONTEXT_LOSS</p>
+                                <h3 class="why-title">Unified Execution</h3>
+                                <p class="why-desc">
+                                    The engineer architecting your system builds
+                                    it. Zero translation noise, zero agency
+                                    overhead.
+                                </p>
+                            </div>
+                            <div class="why-item">
+                                <p class="why-num">03_PRECISION_OVER_SPEED</p>
+                                <h3 class="why-title">Flawless Stability</h3>
+                                <p class="why-desc">
+                                    We reject shortcuts. We engineer clean,
+                                    predictable, robust codebases designed for
+                                    industrial operations.
+                                </p>
+                            </div>
+                            <div class="why-item">
+                                <p class="why-num">04_END_TO_END_OWNERSHIP</p>
+                                <h3 class="why-title">Comprehensive Loop</h3>
+                                <p class="why-desc">
+                                    From initial architecture to production
+                                    telemetry, we oversee the full software
+                                    lifespan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="sec">
+            <div class="container">
+                <p class="sec-label">Communication Channel</p>
+                <h2 class="sec-h2">Establish a project connection.</h2>
+
+                <div class="contact-wrapper">
+                    <div class="contact-text">
+                        <p class="sec-p">
+                            Whether you need an application engineered from
+                            scratch, a meticulous threat assessment on an
+                            existing system, or custom infrastructure telemetry,
+                            submit your operational vectors below.
+                        </p>
+                    </div>
+
+                    <div>
+                        <form class="cf" id="contactForm">
+                            <input
+                                type="hidden"
+                                name="access_key"
+                                value="9c48221d-92b4-4cac-9d4f-b9b0ae5aae54"
+                            />
+                            <input
+                                type="hidden"
+                                name="subject"
+                                value="New BOLTS Enquiry"
+                            />
+                            <input
+                                type="hidden"
+                                name="redirect"
+                                value="false"
+                            />
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="Your Name / Identifier"
+                                required
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Your Email Address"
+                                required
+                            />
+                            <input
+                                type="text"
+                                name="title"
+                                placeholder="Project Title / Vector"
+                            />
+                            <textarea
+                                name="message"
+                                placeholder="Describe your system architecture and goals..."
+                                required
+                            ></textarea>
+                            <button
+                                type="submit"
+                                class="btn-main"
+                                style="width: 100%; text-align: center"
+                            >
+                                TRANSMIT MESSAGE
+                            </button>
+                        </form>
+                        <div id="formSuccess">
+                            ✓ Message received. We'll be in touch shortly.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-inner">
+                <p>© 2026 BOLTS · BUILD · OPTIMIZE · LOG · TEST · SECURE</p>
+            </div>
+        </footer>
+
+        <script>
+            const form = document.getElementById("contactForm");
+            const successBox = document.getElementById("formSuccess");
+
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.textContent;
+
+                btn.textContent = "TRANSMITTING...";
+                btn.style.opacity = "0.5";
+                btn.disabled = true;
+
+                try {
+                    const res = await fetch(
+                        "https://api.web3forms.com/submit",
+                        {
+                            method: "POST",
+                            body: new FormData(form),
+                        },
+                    );
+                    const data = await res.json();
+                    if (data.success) {
+                        form.style.display = "none";
+                        successBox.style.display = "block";
+                    } else {
+                        throw new Error("Submission failed");
+                    }
+                } catch (err) {
+                    btn.textContent = originalText;
+                    btn.style.opacity = "1";
+                    btn.disabled = false;
+                    alert("Transmission error. Please try again.");
+                }
+            });
+        </script>
+    </body>
+</html>
