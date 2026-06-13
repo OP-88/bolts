@@ -113,16 +113,16 @@
     /* HERO */
     #hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      display: flex;
       align-items: center;
-      gap: 5vw;
       padding: 9rem 7vw 5rem;
       position: relative;
     }
 
     #hero .container {
-      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
       gap: 5vw;
@@ -131,11 +131,33 @@
 
     @media (max-width: 900px) {
       #hero {
-        padding: 8rem 5vw 4rem;
+        min-height: auto;
+        padding: 8rem 5vw 5rem;
       }
       #hero .container {
         grid-template-columns: 1fr;
         gap: 4rem;
+      }
+    }
+
+    .hero-left {
+      order: 1;
+    }
+
+    .hero-right {
+      order: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-left {
+        order: 1;
+      }
+      .hero-right {
+        order: 2;
+        justify-content: center;
       }
     }
 
