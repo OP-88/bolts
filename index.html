@@ -458,6 +458,121 @@
     /* CONTACT */
     #contact { background: var(--surface); }
 
+    /* PROCESS */
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    @media (max-width: 900px) {
+      .process-timeline { grid-template-columns: 1fr; gap: 3rem; }
+    }
+
+    .process-step {
+      position: relative;
+    }
+
+    .process-icon {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+    }
+
+    .process-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.01em;
+    }
+
+    .process-desc {
+      font-size: 0.88rem;
+      color: var(--dim);
+      line-height: 1.7;
+    }
+
+    /* STACK */
+    #stack { background: var(--surface); }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem 4rem;
+    }
+
+    @media (max-width: 700px) {
+      .stack-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .stack-cat-title {
+      font-family: var(--font-m);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .stack-tag {
+      font-family: var(--font-m);
+      font-size: 0.72rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      color: var(--dim);
+      letter-spacing: 0.02em;
+      transition: all 0.2s ease;
+    }
+
+    .stack-tag:hover {
+      border-color: var(--border-hi);
+      color: var(--white);
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      margin-top: 4rem;
+      max-width: 820px;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding-top: 1.8rem;
+    }
+
+    .faq-q {
+      font-size: 1.08rem;
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .faq-a {
+      font-size: 0.92rem;
+      color: var(--dim);
+      line-height: 1.75;
+    }
+
+    /* CONTACT */
+    #contact { background: var(--surface); }
+
     .contact-wrapper {
       display: grid;
       grid-template-columns: 0.95fr 1.05fr;
@@ -561,7 +676,8 @@
   <div class="nav-inner">
     <ul>
       <li><a href="#services">Services</a></li>
-      <li><a href="#why">Why Equinova</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#stack">Stack</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Get in Touch</a>
@@ -635,6 +751,49 @@
   </div>
 </section>
 
+<section id="process" class="sec">
+  <div class="container">
+    <p class="sec-label">Engagement Model</p>
+    <h2 class="sec-h2">How we work together.</h2>
+
+    <div class="process-timeline">
+      <div class="process-step">
+        <div class="process-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+        </div>
+        <h3 class="process-title">Discovery</h3>
+        <p class="process-desc">We start with a technical deep-dive. What are you building? What constraints exist? What does success look like? This shapes scope, timeline, and architecture decisions.</p>
+      </div>
+
+      <div class="process-step">
+        <div class="process-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="process-title">Build</h3>
+        <p class="process-desc">Development happens in focused sprints with regular check-ins. You get working builds early and often. Security and testing aren't afterthoughts—they're built in from commit one.</p>
+      </div>
+
+      <div class="process-step">
+        <div class="process-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <h3 class="process-title">Deploy</h3>
+        <p class="process-desc">Launch with confidence. Infrastructure is provisioned, monitoring is wired up, and you have runbooks for common scenarios. Post-launch support keeps things running smoothly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="why" class="sec">
   <div class="container">
     <p class="sec-label">The Blueprint</p>
@@ -668,6 +827,94 @@
             <p class="why-desc">From initial architecture to production telemetry, we oversee the full software lifespan.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack" class="sec">
+  <div class="container">
+    <p class="sec-label">Technology</p>
+    <h2 class="sec-h2">What we work with.</h2>
+    <p class="sec-p" style="margin-bottom: 3rem;">A selection of tools, frameworks, and platforms we use regularly. Not an exhaustive list—if your project needs something specific, let's talk.</p>
+
+    <div class="stack-grid">
+      <div class="stack-category">
+        <h3 class="stack-cat-title">Frontend</h3>
+        <div class="stack-tags">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Vue</span>
+          <span class="stack-tag">Tailwind</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3 class="stack-cat-title">Backend</h3>
+        <div class="stack-tags">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Go</span>
+          <span class="stack-tag">PostgreSQL</span>
+          <span class="stack-tag">Redis</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3 class="stack-cat-title">Infrastructure</h3>
+        <div class="stack-tags">
+          <span class="stack-tag">AWS</span>
+          <span class="stack-tag">Docker</span>
+          <span class="stack-tag">Kubernetes</span>
+          <span class="stack-tag">Terraform</span>
+          <span class="stack-tag">GitHub Actions</span>
+        </div>
+      </div>
+
+      <div class="stack-category">
+        <h3 class="stack-cat-title">Security</h3>
+        <div class="stack-tags">
+          <span class="stack-tag">Burp Suite</span>
+          <span class="stack-tag">OWASP ZAP</span>
+          <span class="stack-tag">Nmap</span>
+          <span class="stack-tag">Metasploit</span>
+          <span class="stack-tag">Wireshark</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="sec">
+  <div class="container">
+    <p class="sec-label">Questions</p>
+    <h2 class="sec-h2">Common asks.</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-q">Why work with a single operator instead of an agency?</h3>
+        <p class="faq-a">No context gets lost in translation. The person who understands your requirements is the same person writing the code. Decisions happen faster, communication is direct, and you're not paying for layers of project management overhead.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">What size projects do you take on?</h3>
+        <p class="faq-a">Anything from a focused two-week MVP to multi-month platform builds. Security assessments typically run one to three weeks depending on scope. If you're unsure whether your project fits, reach out—we can talk through it.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">How does pricing work?</h3>
+        <p class="faq-a">Project-based for defined scope work, hourly for ongoing consulting or flexible engagements. Security assessments are quoted after an initial scope call. No surprise charges—you know the cost upfront.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">Do you work with existing codebases?</h3>
+        <p class="faq-a">Yes. Whether it's adding features, fixing performance issues, conducting security audits, or rescuing a troubled project, we can jump in. Clean handoffs and documentation are part of the process.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3 class="faq-q">What's your typical availability?</h3>
+        <p class="faq-a">New projects usually start within two weeks. Urgent security work can often begin sooner. Once a project kicks off, you get consistent, focused time—not split attention across a dozen clients.</p>
       </div>
     </div>
   </div>
